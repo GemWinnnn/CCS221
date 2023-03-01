@@ -4,4 +4,4 @@ import matplotlib.pyplot as plt
 
 st.title("Hello")
 st.write("wqhewqheqwwhtest")
-st.write(":smile:")
+st.write(":smile: :cactus: :thumbsup:")
