@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 
 # # DDA LINE
 
-# In[16]:
 
 
 def DDALine (x1,y1,x2,y2): 
@@ -48,9 +47,6 @@ def DDALine (x1,y1,x2,y2):
     
 
 
-# In[15]:
-
-
 def main():
     x1 = int(input("Enter X1: "))
     y1 = int(input("Enter Y1: "))
@@ -73,7 +69,6 @@ if __name__ == "__main__":
 
 # # Bresenham Line
 
-# In[22]:
 
 
 def bres(x1, y1, x2, y2):
@@ -107,9 +102,6 @@ def bres(x1, y1, x2, y2):
     
 
 
-# In[23]:
-
-
 def main():
     x1 = int(input("Enter the Starting point of x: "))
     y1 = int(input("Enter the Starting point of y: "))
@@ -128,8 +120,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-# In[ ]:
 
 
 
