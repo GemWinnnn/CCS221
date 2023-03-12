@@ -6,7 +6,7 @@ from matplotlib import cm
 from scipy.spatial import Delaunay
 import tensorflow as tf
 
-def _plt_basic_object_(points, color):
+def _plt_basic_object_(points, color=[1, 0, 0]):
 
     tri = Delaunay(points).convex_hull
 
@@ -29,6 +29,7 @@ def _plt_basic_object_(points, color):
     ax.set_zlim3d(-15, 15)
 
     return fig
+
 
 
 def _sphere_(center=(0,0,0), radius=1, num_steps=20):
