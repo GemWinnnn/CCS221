@@ -86,7 +86,9 @@ shapes = st.sidebar.selectbox("Choose a shape", ["rectangle", "diamond", "triang
 bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, (0, 0, 0), step=0.1)
 if shapes == "rectangle":
     side_lengths = st.sidebar.slider("Side Lengths", 0.1, 15.0, (1, 1, 1), step=0.1)
+    bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, 0, step=0.1)
     fig = plot_3d_object(shapes, bottom_lower, side_lengths=side_lengths)
+
 elif shapes == "diamond":
     side_length = st.sidebar.slider("Side Length", 0.1, 15.0, 5, step=0.1)
     fig = plot_3d_object(shapes, bottom_lower, side_length=side_length)
