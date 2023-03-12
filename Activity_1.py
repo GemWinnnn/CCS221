@@ -1,6 +1,8 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 # DDA Line Algorithm
 def DDALine(x1, y1, x2, y2): 
     # find absolute differences
