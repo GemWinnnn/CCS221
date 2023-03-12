@@ -6,6 +6,7 @@ from matplotlib import cm
 from scipy.spatial import Delaunay
 
 import tensorflow as tf
+import streamlit as st
 
 def _plt_basic_object_(points):
 
@@ -34,39 +35,41 @@ def _plt_basic_object_(points):
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
-    plt.show()
+    return fig
 
 
-def _diamond_(bottom_lower = (0, 0, 0,), side_length = 5):
+def _diamond_(bottom_lower=(0, 0, 0,), side_length=5):
 
     bottom_lower = np.array(bottom_lower)
 
     points = np.vstack([
-    bottom_lower + [side_length/2, 0, side_length/2],
+        bottom_lower + [side_length/2, 0, side_length/2],
         bottom_lower + [0, side_length/2, side_length/2],
         bottom_lower + [side_length/2, side_length/2, 0],
         bottom_lower + [side_length/2, side_length/2, side_length],
         bottom_lower + [side_length, side_length/2, side_length/2],
         bottom_lower + [side_length/2, side_length, side_length/2],
     ])
-    
+
     return points
 
 init_diamond_ = _diamond_(bottom_lower=(1, 2, 3), side_length=10)
 points = tf.constant(init_diamond_, dtype=tf.float32)
 
-_plt_basic_object_(init_diamond_)
+fig = _plt_basic_object_(init_diamond_)
+st.pyplot(fig)
 
-@tf.function
-def translate_obj(points, amount):  
+x = st.sidebar.slider('x', -15.0, 15.0, 0.0)
+y = st.sidebar.slider('y', -15.0, 15.0, 0.0)
+z = st.sidebar.slider('z', -15.0, 15.0, 0.0)
+
+@st.cache
+def translate_obj(points, amount):
     return tf.add(points, amount)
 
-# Update the values here to move the diamond around x , y , z
-x = float(input("Enter the x component of the vector: "))
-y = float(input("Enter the y component of the vector: "))
-z = float(input("Enter the z component of the vector: "))
-translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-translated_object = translate_obj(points, translation_amount)
-
-translated_diamond = translated_object.numpy()
-_plt_basic_object_(translated_diamond)
+if st.button('Translate'):
+    translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+    translated_object = translate_obj(points, translation_amount)
+    translated_diamond = translated_object.numpy()
+    fig = _plt_basic_object_(translated_diamond)
+    st.pyplot(fig)
