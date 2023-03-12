@@ -92,3 +92,78 @@ def _sphere_(center=(0,0,0), radius=1, num_steps=20):
     
     return points
 
+
+st.title("3D Shapes Translation")
+
+#Rectangle
+st.header("Rectangle")
+init_rect = rectangle(bottom_lower=(-5, -5, -5), side_lengths=(10, 5, 3))
+points_rect = tf.constant(init_rect, dtype=tf.float32)
+
+fig = plt_basic_object(init_rect)
+st.pyplot(fig)
+
+x1 = st.sidebar.slider('x1', -15.0, 15.0, 0.0)
+y1 = st.sidebar.slider('y1', -15.0, 15.0, 0.0)
+z1 = st.sidebar.slider('z1', -15.0, 15.0, 0.0)
+
+@st.cache
+def translate_obj(points, amount):
+    return tf.add(points, amount)
+
+if st.button('Translate Rectangle'):
+    translation_amount = tf.constant([x1, y1, z1], dtype=tf.float32)
+    translated_object = translate_obj(points_rect, translation_amount)
+    translated_rect = translated_object.numpy()
+    fig = plt_basic_object(translated_rect)
+    st.pyplot(fig)
+
+#Diamond
+st.header("Diamond")
+init_diamond = diamond(bottom_lower=(1, 2, 3), side_length=8)
+points_diamond = tf.constant(init_diamond, dtype=tf.float32)
+
+fig = plt_basic_object(init_diamond)
+st.pyplot(fig)
+
+x2 = st.sidebar.slider('x2', -15.0, 15.0, 0.0)
+y2 = st.sidebar.slider('y2', -15.0, 15.0, 0.0)
+z2 = st.sidebar.slider('z2', -15.0, 15.0, 0.0)
+
+if st.button('Translate Diamond'):
+    translation_amount = tf.constant([x2, y2, z2], dtype=tf.float32)
+    translated_object = translate_obj(points_diamond, translation_amount)
+    translated_diamond = translated_object.numpy()
+    fig = plt_basic_object(translated_diamond)
+    st.pyplot(fig)
+
+#Pyramid
+st.header("Pyramid")
+init_pyramid = pyramid2(bottom_center=(0, 0, 0))
+points_pyramid = tf.constant(init_pyramid, dtype=tf.float32)
+
+fig = plt_basic_object(init_pyramid)
+st.pyplot(fig)
+
+x3 = st.sidebar.slider('x3', -15.0, 15.0, 0.0)
+y3 = st.sidebar.slider('y3', -15.0, 15.0, 0.0)
+z3 = st.sidebar.slider('z3', -15.0, 15.0, 0.0)
+
+if st.button('Translate Pyramid'):
+    translation_amount = tf.constant([x3, y3, z3], dtype=tf.float32)
+    translated_object = translate_obj(points_pyramid, translation_amount)
+    translated_pyramid = translated_object.numpy()
+    fig = plt_basic_object(translated_pyramid)
+    st.pyplot(fig)
+
+#Sphere
+st.header("Sphere")
+init_sphere = sphere(center=(0, 0, 0), radius=5, num_steps=20)
+points_sphere = tf.constant(init_sphere, dtype=tf.float32)
+
+fig = plt_basic_object(init_sphere)
+st.pyplot(fig)
+
+x4 = st.sidebar.slider('x4', -15.0, 15.0, 0.0)
+y4 = st.sidebar.slider('y4', -15.0, 15.0, 0.0)
+z4 = st.sidebar.slider('z4', -15.0, 15.0,
