@@ -100,23 +100,20 @@ y = st.number_input("Enter the y component of the vector:")
 z = st.number_input("Enter the z component of the vector:")
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
 
-# Translate rectangular prism
-points = tf.constant(init_rectangular_prism, dtype=tf.float32)
-translated_object = tf.add(points, translation_amount)
-translated_rectangular_prism = translated_object.numpy()
-fig = _plt_basic_object_(translated_rectangular_prism)
+# Create a 3D rectangular prism and display it
+init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
+color_rectangular_prism = [1, 0, 0] # Red color
+fig = _plt_basic_object_(init_rectangular_prism, color_rectangular_prism)
 st.pyplot(fig)
 
-# Translate pyramid
-points = tf.constant(init_pyramid, dtype=tf.float32)
-translated_object = tf.add(points, translation_amount)
-translated_pyramid = translated_object.numpy()
-fig = _plt_basic_object_(translated_pyramid)
+# Create a 3D pyramid and display it
+init_pyramid = _pyramid_(bottom_center=(0, 0, 0), side_length=10)
+color_pyramid = [0, 1, 0] # Green color
+fig = _plt_basic_object_(init_pyramid, color_pyramid)
 st.pyplot(fig)
 
-# Translate sphere
-points = tf.constant(init_sphere, dtype=tf.float32)
-translated_object = tf.add(points, translation_amount)
-translated_sphere = translated_object.numpy()
-fig = _plt_basic_object_(translated_sphere)
+# Create a 3D sphere and display it
+init_sphere = _sphere_(center=(0,0,0), radius=2)
+color_sphere = [0, 0, 1] # Blue color
+fig = _plt_basic_object_(init_sphere, color_sphere)
 st.pyplot(fig)
