@@ -76,6 +76,18 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
 
     return points
 
+def _pyramid_(bottom_center=(0,0,0), side_length=1):
+    bottom_center = np.array(bottom_center)
+    half_side = side_length/2
+    points = np.vstack([
+        bottom_center + [-half_side, -half_side, 0],
+        bottom_center + [-half_side, half_side, 0],
+        bottom_center + [half_side, half_side, 0],
+        bottom_center + [half_side, -half_side, 0],
+        bottom_center + [0, 0, side_length]
+    ])
+    return points
+
 
 st.title("3D Shape Translation")
 
