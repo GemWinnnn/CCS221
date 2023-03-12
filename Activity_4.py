@@ -50,17 +50,19 @@ def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
 
     return points
 
-def rectangle(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
+def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
     bottom_lower = np.array(bottom_lower)
     side_lengths = np.array(side_lengths)
 
-    points = np.vstack([    bottom_lower,    bottom_lower + [0, side_lengths[1], 0],
-                        
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_lengths[1], 0],
         bottom_lower + [side_lengths[0], side_lengths[1], 0],
         bottom_lower + [side_lengths[0], 0, 0],
         bottom_lower + [0, 0, side_lengths[2]],
         bottom_lower + [0, side_lengths[1], side_lengths[2]],
-        bottom_lower + [side_lengths[0], side_lengths[1], side_lengths[2]]
+        bottom_lower + [side_lengths[0], side_lengths[1], side_lengths[2]],
+        bottom_lower + [side_lengths[0], 0, side_lengths[2]],
     ])
 
     return points
