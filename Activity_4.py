@@ -80,36 +80,35 @@ def sphere(center=(0, 0, 0), radius=1):
 def triangle(p1=(0, 0, 0), p2=(1, 0, 0), p3=(0, 1, 0)):
     points = np.vstack([p1, p2, p3])
     return points
+
 st.sidebar.title("Controls")
 
 shapes = st.sidebar.selectbox("Choose a shape", ["rectangle", "diamond", "triangle", "sphere"])
-bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, (0, 0, 0), step=0.1)
-if shapes == "rectangle":
-    side_lengths = st.sidebar.slider("Side Lengths", 0.1, 15.0, (1, 1, 1), step=0.1)
-    bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, 0, step=0.1)
-    fig = plot_3d_object(shapes, bottom_lower, side_lengths=side_lengths)
+bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, (0, 0), step=0.1) # Option 1
 
-elif shapes == "diamond":
-    side_length = st.sidebar.slider("Side Length", 0.1, 15.0, 5, step=0.1)
-    bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, 0, step=0.1)
-    fig = plot_3d_object(shapes, bottom_lower, side_length=side_length)
+    if shapes == "rectangle":
+        side_lengths = st.sidebar.slider("Side Lengths", 0.1, 15.0, (1, 1, 1), step=0.1)
+        bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, 0, step=0.1)
+        fig = plot_3d_object(shapes, bottom_lower, side_lengths=side_lengths)
 
-elif shapes == "triangle":
-    p1 = st.sidebar.slider("Vertex 1", -15.0, 15.0, 0, step=0.1)
-    p2 = st.sidebar.slider("Vertex 2", -15.0, 15.0, 0, step=0.1)
-    p3 = st.sidebar.slider("Vertex 3", -15.0, 15.0, 0, step=0.1)
-    fig = plot_3d_object(shapes, p1, p2, p3)
+    elif shapes == "diamond":
+        side_length = st.sidebar.slider("Side Length", 0.1, 15.0, 5, step=0.1)
+        bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, 0, step=0.1)
+        fig = plot_3d_object(shapes, bottom_lower, side_length=side_length)
 
-elif shapes == "sphere":
-    center = st.sidebar.slider("Center", -15.0, 15.0, 0, step=0.1)
-    radius = st.sidebar.slider("Radius", 0.1, 15.0, 1, step=0.1)
-    fig = plot_3d_object(shapes, center=center, radius=radius)
+    elif shapes == "triangle":
+        p1 = st.sidebar.slider("Vertex 1", -15.0, 15.0, 0, step=0.1)
+        p2 = st.sidebar.slider("Vertex 2", -15.0, 15.0, 0, step=0.1)
+        p3 = st.sidebar.slider("Vertex 3", -15.0, 15.0, 0, step=0.1)
+        fig = plot_3d_object(shapes, p1, p2, p3)
 
+    elif shapes == "sphere":
+        center = st.sidebar.slider("Center", -15.0, 15.0, 0, step=0.1)
+        radius = st.sidebar.slider("Radius", 0.1, 15.0, 1, step=0.1)
+        fig = plot_3d_object(shapes, center=center, radius=radius)
 
-
-fig = _plt_basic_object_(points)
-st.pyplot(fig)
-
+    fig = plt_basic_object(points)
+    st.pyplot(fig)
 
 
  
