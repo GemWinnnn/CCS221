@@ -125,6 +125,5 @@ def main():
 
     st.pyplot(fig)
 
-if __name__ == "main":
+if __name__ == "__main__":
     main()
-
