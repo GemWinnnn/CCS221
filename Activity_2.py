@@ -3,6 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def change(two_d_arr, x, y, color):
+    two_d_arr[x][y] = color
+    img = plt.imshow(two_d_arr, interpolation='none', cmap='plasma')
+    img.set_clim([0,50])
+    plt.colorbar()
+    st.pyplot()
+
 def main():
     st.title("2D Array Editor")
 
@@ -17,5 +24,8 @@ def main():
 
         change(two_d_arr, x_val, y_val, c_val)
 
-    st.write("Updated Array:")
-    st.write(two_d_arr)
+        st.write("Updated Array:")
+        st.write(two_d_arr)
+
+if __name__ == '__main__':
+    main()
