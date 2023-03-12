@@ -6,6 +6,7 @@ from matplotlib import cm
 from scipy.spatial import Delaunay
 
 import tensorflow as tf
+import streamlit as st
 
 def _plt_basic_object_(points):
 
@@ -34,18 +35,18 @@ def _plt_basic_object_(points):
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
-    plt.show()
+    return fig
 
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
 
     points = np.vstack([
-    bottom_center + [-3, -3, 0],
-    bottom_center + [-3, +3, 0],
-    bottom_center + [+3, -3, 0],
-    bottom_center + [+3, +3, 0],
-    bottom_center + [0, 0, +5]
+        bottom_center + [-3, -3, 0],
+        bottom_center + [-3, +3, 0],
+        bottom_center + [+3, -3, 0],
+        bottom_center + [+3, +3, 0],
+        bottom_center + [0, 0, +5]
     ])
 
     return points
@@ -53,18 +54,20 @@ def _pyramid2_(bottom_center=(0, 0, 0)):
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
 
-_plt_basic_object_(_pyramid2_)
+fig = _plt_basic_object_(init_pyramid)
+st.pyplot(fig)
 
-@tf.function
-def translate_obj(points, amount):  
+x = st.sidebar.slider('x', -15.0, 15.0, 0.0)
+y = st.sidebar.slider('y', -15.0, 15.0, 0.0)
+z = st.sidebar.slider('z', -15.0, 15.0, 0.0)
+
+@st.cache
+def translate_obj(points, amount):
     return tf.add(points, amount)
 
-# Update the values here to move the diamond around x , y , z
-x = float(input("Enter the x component of the vector: "))
-y = float(input("Enter the y component of the vector: "))
-z = float(input("Enter the z component of the vector: "))
-translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-translated_object = translate_obj(points, translation_amount)
-
-translated_diamond = translated_object.numpy()
-_plt_basic_object_(translated_diamond)
+if st.button('Translate'):
+    translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+    translated_object = translate_obj(points_pyramid2, translation_amount)
+    translated_pyramid = translated_object.numpy()
+    fig = _plt_basic_object_(translated_pyramid)
+    st.pyplot(fig)
