@@ -11,25 +11,24 @@ def _plt_basic_object_(points, color=[1, 0, 0]):
     tri = Delaunay(points).convex_hull
 
     # Define a color for each face
-    face_colors = np.array([
-        color
-    ])
+    face_colors = np.array([color])
 
     # Repeat each color for each vertex in the corresponding face
     face_colors = np.repeat(face_colors, 3, axis=0)
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    S = ax.plot_trisurf(points[:,0], points[:,1], points[:,2],
-                        triangles = tri,
-                        shade = True, facecolors = face_colors, lw = 0.5)
+    S = ax.plot_trisurf(
+        points[:, 0], points[:, 1], points[:, 2],
+        triangles=tri,
+        shade=True, facecolors=face_colors, lw=0.5
+    )
 
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
     return fig
-
 
 
 def _sphere_(center=(0,0,0), radius=1, num_steps=20):
