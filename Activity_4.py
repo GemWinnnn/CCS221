@@ -158,7 +158,7 @@ if st.button('Translate Pyramid'):
     
 _object.numpy()
 fig = _plt_basic_object_(translated_pyramid)
-    st.pyplot(fig)
+st.pyplot(fig)
 
 #Sphere
 st.header("Sphere")
