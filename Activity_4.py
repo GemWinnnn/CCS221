@@ -60,15 +60,13 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
 
 def _diamond_(bottom_lower=(0, 0, 0,), side_length=5):
     bottom_lower = np.array(bottom_lower)
-    u = np.linspace(0, 2*np.pi, 4)
-    v = np.linspace(0, np.pi, 3)
-    u, v = np.meshgrid(u, v)
-    u = u.flatten()
-    v = v.flatten()
-    x = bottom_lower[0] + side_length/2 * np.cos(u) * np.sin(v)
-    y = bottom_lower[1] + side_length/2 * np.sin(u) * np.sin(v)
-    z = bottom_lower[2] + side_length/2 * np.cos(v)
-    points = np.vstack([x, y, z]).T
+    u = np.array([0, np.pi/2, np.pi, 3*np.pi/2])
+    v = np.array([0, np.pi/2, np.pi])
+    x = bottom_lower[0] + side_length/2 * np.cos(u)
+    y = bottom_lower[1] + side_length/2 * np.sin(u)
+    z = bottom_lower[2] + side_length/2 * np.sin(v)
+    z_broadcasted = np.broadcast_to(z[:, np.newaxis], (4, 3))
+    points = np.vstack([x, y, z_broadcasted]).T
     return points
 
 
