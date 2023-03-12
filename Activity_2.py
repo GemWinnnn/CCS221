@@ -1,17 +1,17 @@
-import streamlit as st
+mport streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 two_d_arr = np.array([[1,0,1], [0,1,0], [1,0,1]])
 
 def change(x, y, color):
     global two_d_arr
     two_d_arr[x][y] = color
-    fig, ax = plt.subplots()
-    img = ax.imshow(two_d_arr, interpolation='none', cmap='plasma')
+    img = plt.imshow(two_d_arr, interpolation='none', cmap='plasma')
     img.set_clim([0,50])
     plt.colorbar()
-    return fig
+    st.pyplot()
 
 def main():
     st.title("2D Array Editor")
@@ -21,9 +21,7 @@ def main():
         y_val = st.number_input("Y coordinate (column 0-2):", key=f"y_{i}", min_value=0, max_value=2)
         c_val = st.number_input("Color Value (1-50):", key=f"c_{i}", min_value=1, max_value=50)
 
-        fig = change(x_val, y_val, c_val)
-        st.pyplot(fig)
-
+        change(x_val, y_val, c_val)
         st.write("Updated Array:")
         st.write(two_d_arr)
 
