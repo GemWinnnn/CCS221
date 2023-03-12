@@ -98,7 +98,7 @@ def plot_3d_object(shape, *args, **kwargs):
     return fig
 
 def main():
-st.sidebar.title("Controls")
+    st.sidebar.title("Controls")
 
 shapes = st.sidebar.selectbox("Choose a shape", ["rectangle", "diamond", "triangle", "sphere"])
 
