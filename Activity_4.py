@@ -80,26 +80,26 @@ def triangle(p1=(0, 0, 0), p2=(1, 0, 0), p3=(0, 1, 0)):
     return points
 st.sidebar.title("Controls")
 
-shape_type = st.sidebar.selectbox("Select Shape", ["Rectangle", "Triangle", "Sphere"])
+shapes = st.sidebar.selectbox("Choose a shape", ["rectangle", "diamond", "triangle", "sphere"])
+bottom_lower = st.sidebar.slider("Bottom Lower Coordinate", -15.0, 15.0, (0, 0, 0), step=0.1)
+if shapes == "rectangle":
+    side_lengths = st.sidebar.slider("Side Lengths", 0.1, 15.0, (1, 1, 1), step=0.1)
+    fig = plot_3d_object(shapes, bottom_lower, side_lengths=side_lengths)
+elif shapes == "diamond":
+    side_length = st.sidebar.slider("Side Length", 0.1, 15.0, 5, step=0.1)
+    fig = plot_3d_object(shapes, bottom_lower, side_length=side_length)
+elif shapes == "triangle":
+    side_length = st.sidebar.slider("Side Length", 0.1, 15.0, 5, step=0.1)
+    fig = plot_3d_object(shapes, bottom_lower, side_length=side_length)
+elif shapes == "sphere":
+    center = st.sidebar.slider("Center", -15.0, 15.0, (0, 0, 0), step=0.1)
+    radius = st.sidebar.slider("Radius", 0.1, 15.0, 1, step=0.1)
+    fig = plot_3d_object(shapes, center=center, radius=radius)
 
-if shape_type == "Rectangle":
-    bottom_lower = st.sidebar.slider("Bottom Left", -10, 10, 0, 1)
-    side_lengths = st.sidebar.slider("Side Lengths", 0, 10, 1, 0.5)
-    points = rectangle(bottom_lower=(bottom_lower, bottom_lower, bottom_lower), side_lengths=(side_lengths, side_lengths, side_lengths))
-
-if shape_type == "Triangle":
-    p1 = st.sidebar.slider("Point 1", -10, 10, 0, 1)
-    p2 = st.sidebar.slider("Point 2", -10, 10, 1, 1)
-    p3 = st.sidebar.slider("Point 3", -10, 10, 0, 1)
-    points = triangle(p1=(p1, p1, p1), p2=(p2, p2, p2), p3=(p3, p3, p3))
-
-if shape_type == "Sphere":
-    center = st.sidebar.slider("Center", -10, 10, 0, 1)
-    radius = st.sidebar.slider("Radius", 0, 10, 1, 0.5)
-    points = sphere(center=(center, center, center), radius=radius)
 
 fig = _plt_basic_object_(points)
 st.pyplot(fig)
+
 
 
  
