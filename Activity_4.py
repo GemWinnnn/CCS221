@@ -83,10 +83,8 @@ def triangle(p1=(0, 0, 0), p2=(1, 0, 0), p3=(0, 1, 0)):
 
 def plot_3d_object(shape, *args, **kwargs):
     if shape == "rectangle":
-    points = rectangle(*args, **kwargs)
+        points = rectangle(*args, **kwargs)
 
-    python
-    Copy code
     elif shape == "diamond":
         points = _diamond_(*args, **kwargs)
 
