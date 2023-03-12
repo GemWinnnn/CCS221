@@ -105,22 +105,3 @@ translated_rectangular_prism = translated_object.numpy()
 _plt_basic_object_(translated_rectangular_prism)
 
 
-
-init_diamond_ = _diamond_(bottom_lower=(1, 2, 3), side_length=10)
-points = tf.constant(init_diamond_, dtype=tf.float32)
-
-_plt_basic_object_(init_diamond_)
-
-@tf.function
-def translate_obj(points, amount):  
-    return tf.add(points, amount)
-
-# Update the values here to move the diamond around x , y , z
-x = float(input("Enter the x component of the vector: "))
-y = float(input("Enter the y component of the vector: "))
-z = float(input("Enter the z component of the vector: "))
-translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-translated_object = translate_obj(points, translation_amount)
-
-translated_diamond = translated_object.numpy()
-_plt_basic_object_(translated_diamond)
