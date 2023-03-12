@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 def change(two_d_arr, x, y, color):
     two_d_arr[x][y] = color
