@@ -153,7 +153,7 @@ if st.button('Translate Pyramid'):
     translation_amount = tf.constant([x3, y3, z3], dtype=tf.float32)
     translated_object = translate_obj(points_pyramid, translation_amount)
     translated_pyramid = translated_object.numpy()
-    fig = plt_basic_object(translated_pyramid)
+    fig = _plt_basic_object_(translated_pyramid)
     st.pyplot(fig)
     
 _object.numpy()
