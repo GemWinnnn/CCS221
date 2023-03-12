@@ -156,10 +156,6 @@ if st.button('Translate Pyramid'):
     fig = _plt_basic_object_(translated_pyramid)
     st.pyplot(fig)
     
-_object.numpy()
-fig = _plt_basic_object_(translated_pyramid)
-st.pyplot(fig)
-
 #Sphere
 st.header("Sphere")
 init_sphere = _sphere_(center=(0, 0, 0), radius=5, num_steps=20)
