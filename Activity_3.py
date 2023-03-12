@@ -68,30 +68,30 @@ def main():
             plt.title(f"Rotation {tx}, {ty}")
             
              # Scaling
-        scaled_img = scale_image(img, x_scale, y_scale)
-        plt.subplot(3, 3, 3 + (i * 6) % 6)
-        plt.imshow(scaled_img)
-        plt.title(f"Scaled {x_scale}, {y_scale}")
-        plt.axis('off')
+            scaled_img = scale_image(img, x_scale, y_scale)
+            plt.subplot(3, 3, 3 + (i * 6) % 6)
+            plt.imshow(scaled_img)
+            plt.title(f"Scaled {x_scale}, {y_scale}")
+            plt.axis('off')
 
-        # Reflection
-        if axis != 'None':
-            reflected_img = reflect_image(img, axis.lower())
-        else:
-            reflected_img = img
-        plt.subplot(3, 3, 4 + (i * 6) % 6)
-        plt.imshow(reflected_img)
-        plt.title(f"Reflected {axis}-axis")
-        plt.axis('off')
+            # Reflection
+            if axis != 'None':
+                reflected_img = reflect_image(img, axis.lower())
+            else:
+                reflected_img = img
+            plt.subplot(3, 3, 4 + (i * 6) % 6)
+            plt.imshow(reflected_img)
+            plt.title(f"Reflected {axis}-axis")
+            plt.axis('off')
 
-        # Shear
-        sheared_img = shear_image(img, shear_factor)
-        plt.subplot(3, 3, 5 + (i * 6) % 6)
-        plt.imshow(sheared_img)
-        plt.title(f"Sheared {shear_factor}")
-        plt.axis('off')
+            # Shear
+            sheared_img = shear_image(img, shear_factor)
+            plt.subplot(3, 3, 5 + (i * 6) % 6)
+            plt.imshow(sheared_img)
+            plt.title(f"Sheared {shear_factor}")
+            plt.axis('off')
 
-    st.pyplot(plt)
-    plt.close()
-            
+        st.pyplot(plt)
+        plt.close()
+
             
