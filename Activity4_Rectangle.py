@@ -37,15 +37,6 @@ def _plt_basic_object_(points):
     plt.show()
 
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from scipy.spatial import Delaunay
-
-import tensorflow as tf
-
 def _plt_basic_object_(points):
 
     tri = Delaunay(points).convex_hull
