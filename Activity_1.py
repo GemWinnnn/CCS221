@@ -3,11 +3,15 @@ import matplotlib.pyplot as plt
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-# DDA Line Algorithm
 def DDALine(x1, y1, x2, y2): 
     # find absolute differences
     dx = x2 - x1 
     dy = y2 - y1
+    
+    # check for divide by zero error
+    if dx == 0 and dy == 0:
+        return
+    
     # calculate steps required for generating pixels
     steps = abs(dx) if abs(dx) > abs(dy) else abs(dy)
     # calculate the increment in x and y for each step
