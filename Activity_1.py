@@ -49,7 +49,7 @@ def bres(x1, y1, x2, y2):
     # Initialize the plotting points
     xcoordinates = [x]
     ycoordinates = [y]
-    for k in range(2, dx + 2):
+    for k in range(2, int(dx) + 2):
         if p > 0:
             y = y + 1 if y < y2 else y - 1
             p = p + 2 * (dy - dx)
@@ -62,6 +62,7 @@ def bres(x1, y1, x2, y2):
     plt.title("Bresenham Algorithm")
     plt.xlabel("X Axis")
     plt.ylabel("Y Axis")
+
 
 def main_bres():
     x1 = st.number_input("Enter the Starting point of x: ")
