@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
+
 
 two_d_arr = np.array([[1,0,1], [0,1,0], [1,0,1]])
 
