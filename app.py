@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np 
-import matplotliib as plt
-import cv2
+import matplotlib as plt
 from io import StringIO
 import pandas as pd
 
