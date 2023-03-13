@@ -94,5 +94,5 @@ def main():
         st.sidebar.markdown("### Enter the Coordinates")
         main_bres()
 
-if _name_ == "_main_":
+if __name__ == '__main__':
     main()

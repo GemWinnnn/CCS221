@@ -29,5 +29,5 @@ def main():
         st.write("Updated Array:")
         st.write(two_d_arr)
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     main()
