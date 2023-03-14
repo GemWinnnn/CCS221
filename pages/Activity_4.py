@@ -25,7 +25,7 @@ def plt_basic_object_(points, counter):
     elif (counter == 3):
         plt.title("Diamond")
     elif (counter ==4)
-        plt.title ("Circle"):   
+        plt.title ("Circle")
 
     return fig
 
