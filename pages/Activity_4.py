@@ -110,7 +110,7 @@ def main():
   translation_amount = tf.constant([x, y, z], dtype=tf.float32)
   translated_object = tf.add(points, translation_amount)
 
-  with tf.Session() as session: 
+  with tf.compat.v1.Session() as session: 
       translated_points = session.run(translated_object)
 
   fig = _plt_basic_object_(translated_points, counter)
