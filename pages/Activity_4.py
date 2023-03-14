@@ -88,10 +88,6 @@ def main():
         "Sphere ")
   )
 
-  x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
-  y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
-  z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
-
   if object_choice == "Pyramid":
       init_object = _pyramid_(bottom_center=(0,0,0))
       points = tf.constant(init_object, dtype=tf.float32)
@@ -106,6 +102,10 @@ def main():
       counter = 3
   else:
       points = points_sphere
+  
+  x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
+  y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
+  z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
 
   translation_amount = tf.constant([x, y, z], dtype=tf.float32)
   translated_object = tf.add(points, translation_amount)
