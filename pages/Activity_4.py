@@ -73,20 +73,20 @@ def _heart_(bottom_center = (0, 0, 0)):
 
 
 def main():
-    init_sphere = _sphere_(center=(0,0,0), radius=2)
-    points_sphere = tf.constant(init_sphere, dtype=tf.float32)
-    counter = 4
+  init_sphere = _sphere_(center=(0,0,0), radius=2)
+  points_sphere = tf.constant(init_sphere, dtype=tf.float32)
+  counter = 4
 
-    st.title("3D Object Translator")
-    st.sidebar.title("Object Selection")
+  st.title("3D Object Translator")
+  st.sidebar.title("Object Selection")
 
-    object_choice = st.sidebar.selectbox(
-        "Choose an object to translate:",
-        ( "Pyramid",
-          "Heart",
-          "Diamond",
-          "Sphere ")
-    )
+  object_choice = st.sidebar.selectbox(
+      "Choose an object to translate:",
+      ( "Pyramid",
+        "Heart",
+        "Diamond",
+        "Sphere ")
+  )
 
   x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
   y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
