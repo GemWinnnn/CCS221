@@ -59,12 +59,12 @@ def main():
             BXnew.append(BXnew_sum)
             BYnew.append(BYnew_sum)
 
-        # Apply the translation transformation to each old coordinate and create a new image
-        old_translated_img_1 = translation(opencv_image, BXold[0], BYold[0])
-        old_translated_img_2 = translation(opencv_image, BXold[1], BYold[1])
-        old_translated_img_3 = translation(opencv_image, BXold[2], BYold[2])
-        old_translated_img_4 = translation(opencv_image, BXold[3], BYold[3])
-        old_translated_img_5 = translation(opencv_image, BXold[4], BYold[4])
+    # Apply the translation transformation to each old coordinate and create a new image
+    old_translated_img_1 = translation(opencv_image, BXold[0], BYold[0])
+    old_translated_img_2 = translation(opencv_image, BXold[1], BYold[1])
+    old_translated_img_3 = translation(opencv_image, BXold[2], BYold[2])
+    old_translated_img_4 = translation(opencv_image, BXold[3], BYold[3])
+    old_translated_img_5 = translation(opencv_image, BXold[4], BYold[4])
 
     # Apply the translation transformation to each new coordinate and create a new image
     new_translated_img_1 = translation(opencv_image, BXnew[0], BYnew[0])
