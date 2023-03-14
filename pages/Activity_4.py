@@ -24,6 +24,8 @@ def plt_basic_object_(points, counter):
         plt.title("Heart")
     elif (counter == 3):
         plt.title("Diamond")
+    elif (counter ==4)
+        plt.title ("Circle"):   
 
     return fig
 
@@ -122,3 +124,30 @@ translated_points = points_pyramid + translation
 fig6 = plt_basic_object_(translated_points.numpy(), counter)
 st.pyplot(fig6)
 
+def _sphere_(center=(0,0,0), radius=1, num_steps=20):
+    center = np.array(center)
+    u = np.linspace(0, 2*np.pi, num_steps)
+    v = np.linspace(0, np.pi, num_steps)
+    x = center[0] + radius * np.outer(np.cos(u), np.sin(v))
+    y = center[1] + radius * np.outer(np.sin(u), np.sin(v))
+    z = center[2] + radius * np.outer(np.ones(np.size(u)), np.cos(v))
+    points = np.vstack([x.flatten(), y.flatten(), z.flatten()]).T
+    return points
+
+def translate_obj(points, amount):
+    return tf.add(points, amount)
+
+init_sphere = _sphere_(center=(0,0,0), radius=2)
+counter = 5
+points = tf.constant(init_sphere, dtype=tf.float32)
+
+x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
+y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
+z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
+
+translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+translated_object = translate_obj(points, translation_amount)
+
+# plot translated sphere
+fig5 = plt_basic_object_(translated_object.numpy(), title="Sphere (Translated)")
+st.pyplot(fig5)
