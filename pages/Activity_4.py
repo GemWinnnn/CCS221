@@ -7,9 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from scipy.spatial import Delaunay
 
-
-
-def _plt_basic_object_(points, counter):
+def plt_basic_object_(points, counter):
     tri = Delaunay(points).convex_hull
 
     fig = plt.figure(figsize=(8,8))
@@ -25,35 +23,40 @@ def _plt_basic_object_(points, counter):
         plt.title("Heart")
     elif (counter == 3):
         plt.title("Diamond")
-    elif (counter == 4):
-        plt.title("Sphere")
+    elif (counter ==4)
+        plt.title ("Circle"):   
 
     return fig
-
-def _sphere_(center=(0,0,0), radius=1, num_steps=20):
-    center = np.array(center)
-    u = np.linspace(0, 2*np.pi, num_steps)
-    v = np.linspace(0, np.pi, num_steps)
-    x = center[0] + radius * np.outer(np.cos(u), np.sin(v))
-    y = center[1] + radius * np.outer(np.sin(u), np.sin(v))
-    z = center[2] + radius * np.outer(np.ones(np.size(u)), np.cos(v))
-    points = np.vstack([x.flatten(), y.flatten(), z.flatten()]).T
-    return points
-
 
 def _pyramid_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
 
     points = np.vstack([
-        bottom_center + [-3, -3, 0],
-        bottom_center + [-3, +3, 0],
-        bottom_center + [+3, -3, 0],
-        bottom_center + [+3, +3, 0],
-        bottom_center + [0, 0, +5]
+    bottom_center + [-3, -3, 0],
+    bottom_center + [-3, +3, 0],
+    bottom_center + [+3, -3, 0],
+    bottom_center + [+3, +3, 0],
+    bottom_center + [0, 0, +5]
     ])
 
     return points
 
+init_pyramid = _pyramid_(bottom_center=(0,0,0))
+points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
+counter = 1
+fig1 = plt_basic_object_(init_pyramid, counter)
+st.pyplot(fig1)
+
+x = st.slider("Enter for x:", -10, 10, step=1,key='my_slider1')
+y = st.slider("Enter for y:", -10, 10, step=1,key='my_slider2')
+z = st.slider("Enter for z:", -10, 10, step=1,key='my_slider3')
+
+translation = tf.constant([x, y, z], dtype=tf.float32)
+
+translated_points = points_pyramid2 + translation
+
+fig2 = plt_basic_object_(translated_points.numpy(), counter)
+st.pyplot(fig2)
 
 def _heart_(bottom_center = (0, 0, 0)):
     bottom_center = np.array(bottom_center)
@@ -71,49 +74,20 @@ def _heart_(bottom_center = (0, 0, 0)):
     ])
     return points
 
+init_heart = _heart_(bottom_center=(0,0,0))
+points_heart = tf.constant(init_heart, dtype=tf.float32)
+counter = 2
+fig3 = plt_basic_object_(init_heart, counter)
+st.pyplot(fig3)
 
-def main():
-  init_sphere = _sphere_(center=(0,0,0), radius=2)
-  points_sphere = tf.constant(init_sphere, dtype=tf.float32)
-  counter = 4
+x = st.slider("Enter for x:", -10, 10, step=1,key='my_slider4')
+y = st.slider("Enter for y:", -10, 10, step=1,key='my_slider5')
+z = st.slider("Enter for z:", -10, 10, step=1,key='my_slider6')
 
-  st.title("3D Object Translator")
-  st.sidebar.title("Object Selection")
+translation = tf.constant([x, y, z], dtype=tf.float32)
 
-  object_choice = st.sidebar.selectbox(
-      "Choose an object to translate:",
-      ( "Pyramid",
-        "Heart",
-        "Diamond",
-        "Sphere ")
-  )
+translated_points = points_heart + translation
 
-  if object_choice == "Pyramid":
-      init_object = _pyramid_(bottom_center=(0,0,0))
-      points = tf.constant(init_object, dtype=tf.float32)
-      counter = 1
-  elif object_choice == "Heart":
-      init_object = _heart_(bottom_center=(0,0,0))
-      points = tf.constant(init_object, dtype=tf.float32)
-      counter = 2
-  elif object_choice == "Diamond":
-      init_object = _pyramid_(bottom_center=(0,0,0)) + _pyramid_(bottom_center=(0,0,5))
-      points = tf.constant(init_object, dtype=tf.float32)
-      counter = 3
-  else:
-      points = points_sphere
-  
-  x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
-  y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
-  z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
+fig4 = plt_basic_object_(translated_points.numpy(), counter)
+st.pyplot(fig4)
 
-  translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-  translated_object = tf.add(points, translation_amount)
-
-  with tf.compat.v1.Session() as session: 
-    translated_points = session.run(translated_object)
-
-  _plt_basic_object_(translated_points)
-
-if __name__ == '__main__':
-  main()
