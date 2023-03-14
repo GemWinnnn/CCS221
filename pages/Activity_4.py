@@ -137,22 +137,24 @@ def _sphere_(center=(0,0,0), radius=1, num_steps=20):
 def translate_obj(points, amount):
     return tf.add(points, amount)
 
-init_sphere = _sphere_(center=(0,0,0), radius=2)
-points = tf.constant(init_sphere, dtype=tf.float32)
-counter = 4
+def main():
+    init_sphere = _sphere_(center=(0,0,0), radius=2)
+    points = tf.constant(init_sphere, dtype=tf.float32)
 
-# plot original sphere
-fig1 = plt_basic_object_(points, title="Sphere (Original)")
-st.pyplot(fig1)
+    st.title("3D Sphere Translator")
 
-# get translation amounts from user
-x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
-y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
-z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
+    x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
+    y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
+    z = st.slider("Z Translation", -5.0, 5.0, 0.0, step=0.1)
 
-translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-translated_object = translate_obj(points, translation_amount)
+    translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+    translated_object = translate_obj(points, translation_amount)
+    counter = 4
 
-# plot translated sphere
-fig2 = plt_basic_object_(translated_object.numpy(), title="Sphere (Translated)")
-st.pyplot(fig2)
+    
+    with tf.Session() as session: 
+        translated_sphere = session.run(translated_object)
+
+    _plt_basic_object_(translated_sphere)
+    
+
