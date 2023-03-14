@@ -111,10 +111,9 @@ def main():
   translated_object = tf.add(points, translation_amount)
 
   with tf.compat.v1.Session() as session: 
-      translated_points = session.run(translated_object)
+    translated_points = session.run(translated_object)
 
-  fig = _plt_basic_object_(translated_points, counter)
-  st.pyplot(fig)
+  _plt_basic_object_(translated_points)
 
 if __name__ == '__main__':
   main()
