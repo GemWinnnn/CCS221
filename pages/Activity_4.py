@@ -92,7 +92,7 @@ st.pyplot(fig4)
 
 
 
-def _diamond_(bottom_center=(0, 0, 0)):             #fucntion for diamond shape
+def _diamond_(bottom_center=(0, 0, 0)):             
     bottom_center = np.array(bottom_center)
 
     points = np.vstack([
