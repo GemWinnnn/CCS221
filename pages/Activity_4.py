@@ -86,7 +86,7 @@ def main():
           "Heart",
           "Diamond",
           "Sphere ")
-    
+    )
 
   x = st.slider("X Translation", -5.0, 5.0, 0.0, step=0.1)
   y = st.slider("Y Translation", -5.0, 5.0, 0.0, step=0.1)
