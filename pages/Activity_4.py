@@ -17,7 +17,7 @@ def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
     # Create a colormap to assign colors based on the Z-coordinate of the vertices
-    colormap = mpl.colormaps.get_cmap("viridis")
+    colormap = plt.cm.get_cmap("viridis")
     z_range = points[:, 2].max() - points[:, 2].min()
     face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
