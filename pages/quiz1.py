@@ -23,7 +23,15 @@ def main():
     # Set the title of the Streamlit app
     st.title("Image Uploader and Transformer")
 
-     # Ask the user to input the X and Y values for the translation
+    # Create a file uploader widget for the user to select an image
+    uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
+
+    # If an image is uploaded
+    if uploaded_file is not None:
+    # Set the title for the translation example
+    st.title("Translation Example")
+    
+    # Ask the user to input the X and Y values for the translation
     tx_1 = st.sidebar.number_input("X Value:", value=0)
     ty_1 = st.sidebar.number_input("Y Value:", value=0)
     
@@ -47,9 +55,5 @@ def main():
 
     st.title("Translated Image")
     st.image(img2)
-
 if __name__ == '__main__':
   main()
-
-
-
