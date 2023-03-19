@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D, art3d
 from scipy.spatial import Delaunay
 import tensorflow as tf
 import streamlit as st
+from streamlit_mpl_carousel import mpl_carousel
 
 # Add Streamlit components
 st.title("3D Object Translator")
@@ -12,6 +13,7 @@ x = st.sidebar.slider("Enter the x component of the vector:", -10.0, 10.0, 0.0)
 y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
 z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+separation = st.sidebar.slider("Enter the separation between shapes:", 0.0, 20.0, 0.0)
 
 def _plt_basic_object_(points, object_type="general"):
     if object_type == "pyramid":
@@ -36,7 +38,7 @@ def _plt_basic_object_(points, object_type="general"):
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
-    st.pyplot(fig)
+    mpl_carousel(fig)
 
 
 
@@ -91,11 +93,6 @@ init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5,
 init_sphere = _sphere_(center=(0, 0, 0), radius=2)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
-# Define colors for each object
-rectangular_prism_color = plt.cm.get_cmap("viridis")(0.5)
-sphere_color = plt.cm.get_cmap("viridis")(0.2)
-pyramid_color = plt.cm.get_cmap("viridis")(0.8)
-
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
@@ -111,7 +108,18 @@ translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
 
+# Separate the objects based on the separation slider value
+separation_vector = tf.constant([separation, 0, 0], dtype=tf.float32)
+separated_sphere = translate_obj(translated_sphere, separation_vector)
+separated_object = translate_obj(translated_object, 2 * separation_vector)
+
+# Convert translated and separated objects to NumPy arrays
+translated_rectangular_prism = translated_rectangular_prism.numpy()
+separated_sphere = separated_sphere.numpy()
+separated_object = separated_object.numpy()
+
 # Plot initial objects
+st.header("Initial Objects")
 _plt_basic_object_(init_rectangular_prism)
 _plt_basic_object_(init_sphere)
 _plt_basic_object_(init_pyramid, object_type="pyramid")
@@ -121,3 +129,9 @@ st.header("Translated Objects")
 _plt_basic_object_(translated_rectangular_prism)
 _plt_basic_object_(translated_sphere)
 _plt_basic_object_(translated_object, object_type="pyramid")
+
+# Plot separated objects
+st.header("Separated Objects")
+_plt_basic_object_(translated_rectangular_prism)
+_plt_basic_object_(separated_sphere)
+_plt_basic_object_(separated_object, object_type="pyramid")
