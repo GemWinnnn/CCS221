@@ -1,32 +1,61 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.spatial import Delaunay
 import tensorflow as tf
 import streamlit as st
 
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from scipy.spatial import Delaunay
+# Add Streamlit components
+st.title("3D Object Translator")
 
-def plt_basic_object_(points, counter):
+x = st.sidebar.slider("Enter the x component of the vector:", -10.0, 10.0, 0.0)
+y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
+z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
+translation_amount = tf.constant([x, y, z], dtype=tf.float32)
+
+def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
-    fig = plt.figure(figsize=(8,8))
-    ax = fig.add_subplot(111, projection='3d')
-    S = ax.plot_trisurf(points[:,0], points[:,1], points[:,2],triangles=tri,shade=True, cmap=cm.seismic,lw=0.5)
+    # Define a color for each face
+    face_colors = np.array([
+        [1, 0, 0],  # red
+        [0, 1, 0],  # green
+        [0, 0, 1],  # blue
+        [1, 1, 0],  # yellow
+        [1, 0, 1],  # magenta
+        [0, 1, 1],  # cyan
+    ])
 
-    ax.set_xlim3d(-10, 10)
-    ax.set_ylim3d(-10, 10)
-    ax.set_zlim3d(-10, 10)
-    if (counter == 1):
-        plt.title("Pyramid")
-    elif (counter == 2):
-        plt.title("Heart")
-    elif (counter == 3):
-        plt.title("Diamond")
-    
+    # Repeat each color for each vertex in the corresponding face
+    face_colors = np.repeat(face_colors, 3, axis=0)
+
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2],
+                        triangles=tri,
+                        shade=True, facecolors=face_colors, lw=0.5)
+
+    ax.set_xlim3d(-15, 15)
+    ax.set_ylim3d(-15, 15)
+    ax.set_zlim3d(-15, 15)
+
     return fig
 
-def _pyramid_(bottom_center=(0, 0, 0)):
+def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
+    bottom_lower = np.array(bottom_lower)
+
+    points = np.vstack([
+        bottom_lower + [side_length / 2, 0, side_length / 2],
+        bottom_lower + [0, side_length / 2, side_length / 2],
+        bottom_lower + [side_length / 2, side_length / 2, 0],
+        bottom_lower + [side_length / 2, side_length / 2, side_length],
+        bottom_lower + [side_length, side_length / 2, side_length / 2],
+        bottom_lower + [side_length / 2, side_length, side_length / 2],
+    ])
+
+    return points
+
+def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
 
     points = np.vstack([
@@ -39,53 +68,73 @@ def _pyramid_(bottom_center=(0, 0, 0)):
 
     return points
 
-init_pyramid = _pyramid_(bottom_center=(0,0,0))
-points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
-counter = 1
-fig1 = plt_basic_object_(init_pyramid, counter)
-st.pyplot(fig1)
 
-x = st.slider("Enter for x:", -10, 10, step=1,key='my_slider1')
-y = st.slider("Enter for y:", -10, 10, step=1,key='my_slider2')
-z = st.slider("Enter for z:", -10, 10, step=1,key='my_slider3')
+def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
+    bottom_lower = np.array(bottom_lower)
+    side_lengths = np.array(side_lengths)
 
-translation = tf.constant([x, y, z], dtype=tf.float32)
-
-translated_points = points_pyramid2 + translation
-
-fig2 = plt_basic_object_(translated_points.numpy(), counter)
-st.pyplot(fig2)
-
-def _heart_(bottom_center = (0, 0, 0)):
-    bottom_center = np.array(bottom_center)
     points = np.vstack([
-        bottom_center + [+1.5, -1, +3.5],
-        bottom_center + [+1.5, +1, +3.5],
-        bottom_center + [-1.5, -1, +3.5],
-        bottom_center + [-1.5, +1, +3.5],        
-        bottom_center + [0, +1, +3],
-        bottom_center + [0, -1, +2],
-        bottom_center + [+3, 0, +2],
-        bottom_center + [-3, 0, +2],
-        bottom_center + [0, 1, -2],
-        bottom_center + [0, -1, -2]
+        bottom_lower,
+        bottom_lower + [0, side_lengths[1], 0],
+        bottom_lower + [side_lengths[0], side_lengths[1], 0],
+        bottom_lower + [side_lengths[0], 0, 0],
+        bottom_lower + [0, 0, side_lengths[2]],
+        bottom_lower + [0, side_lengths[1], side_lengths[2]],
+        bottom_lower + [side_lengths[0], side_lengths[1], side_lengths[2]],
+        bottom_lower + [side_lengths[0], 0, side_lengths[2]],
     ])
+
     return points
 
-init_heart = _heart_(bottom_center=(0,0,0))
-points_heart = tf.constant(init_heart, dtype=tf.float32)
-counter = 2
-fig3 = plt_basic_object_(init_heart, counter)
-st.pyplot(fig3)
 
-x = st.slider("Enter for x:", -10, 10, step=1,key='my_slider4')
-y = st.slider("Enter for y:", -10, 10, step=1,key='my_slider5')
-z = st.slider("Enter for z:", -10, 10, step=1,key='my_slider6')
+def _sphere_(center=(0, 0, 0), radius=1, num_steps=20):
+    center = np.array(center)
+    u = np.linspace(0, 2 * np.pi, num_steps)
+    v = np.linspace(0, np.pi, num_steps)
+    x = center[0] + radius * np.outer(np.cos(u), np.sin(v))
+    y = center[1] + radius * np.outer(np.sin(u), np.sin(v))
+    z = center[2] + radius * np.outer(np.ones(np.size(u)), np.cos(v))
+    points = np.vstack([x.flatten(), y.flatten(), z.flatten()]).T
+    return points
 
-translation = tf.constant([x, y, z], dtype=tf.float32)
 
-translated_points = points_heart + translation
+def translate_obj(points, amount):
+    return tf.add(points, amount)
 
-fig4 = plt_basic_object_(translated_points.numpy(), counter)
-st.pyplot(fig4)
+# Initialize objects
+init_diamond = _diamond_(bottom_lower=(1, 2, 3), side_length=10)
+init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
+init_sphere = _sphere_(center=(0, 0, 0), radius=2)
+init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
+# Convert objects to TensorFlow tensors
+diamond_points = tf.constant(init_diamond, dtype=tf.float32)
+rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
+sphere_points = tf.constant(init_sphere, dtype=tf.float32)
+points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
+
+# Translate the objects
+translated_diamond = translate_obj(diamond_points, translation_amount)
+translated_rectangular_prism = translate_obj(rectangular_prism_points, translation_amount)
+translated_sphere = translate_obj(sphere_points, translation_amount)
+translated_object = translate_obj(points_pyramid2, translation_amount)
+
+# Convert translated objects to NumPy arrays
+translated_diamond = translated_diamond.numpy()
+translated_rectangular_prism = translated_rectangular_prism.numpy()
+translated_sphere = translated_sphere.numpy()
+translated_object = translated_object.numpy()
+
+# Plot initial objects
+st.header("Initial Objects")
+st.pyplot(_plt_basic_object_(init_diamond))
+st.pyplot(_plt_basic_object_(init_rectangular_prism))
+st.pyplot(_plt_basic_object_(init_sphere))
+st.pyplot(_plt_basic_object_(points_pyramid2))
+
+# Plot translated objects
+st.header("Translated Objects")
+st.pyplot(_plt_basic_object_(translated_diamond))
+st.pyplot(_plt_basic_object_(translated_rectangular_prism))
+st.pyplot(_plt_basic_object_(translated_sphere))
+st.pyplot(_plt_basic_object_(translated_object))
