@@ -29,7 +29,7 @@ def main():
     # If an image is uploaded
     if uploaded_file is not None:
     # Set the title for the translation example
-    st.title("Translation Example")
+        st.title("Translation Example")
     
     # Ask the user to input the X and Y values for the translation
     tx_1 = st.sidebar.number_input("X Value:", value=0)
