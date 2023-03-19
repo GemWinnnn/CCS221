@@ -126,7 +126,8 @@ translated_object = translated_object.numpy()
 _plt_basic_object_(init_diamond)
 _plt_basic_object_(init_rectangular_prism)
 _plt_basic_object_(init_sphere)
-_plt_basic_object_(init_pyramid.numpy())
+_plt_basic_object_(init_pyramid)
+
 
 # Plot translated objects
 st.header("Translated Objects")
