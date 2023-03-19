@@ -72,20 +72,17 @@ def plot_objects(initial_points, translated_points, title):
 # Define shape points
 def _heart_(bottom_center = (0, 0, 0)):
     bottom_center = np.array(bottom_center)
-    points = np.vstack([
-        bottom_center + [+1.5, -1, +3.5],
-        bottom_center + [+1.5, +1, +3.5],
-        bottom_center + [-1.5, -1, +3.5],
-        bottom_center + [-1.5, +1, +3.5],        
-        bottom_center + [0, +1, +3],
-        bottom_center + [0, -1, +2],
-        bottom_center + [+3, 0, +2],
-        bottom_center + [-3, 0, +2],
-        bottom_center + [0, 1, -2],
-        bottom_center + [0, -1, -2]
-    ])
 
+    points = np.vstack([
+    bottom_center + [+2.5, +2.5, 0],
+    bottom_center + [-2.5, +2.5, 0],
+    bottom_center + [+2.5, -2.5, 0],
+    bottom_center + [-2.5, -2.5, 0],
+    bottom_center + [0, 0, 5],
+    bottom_center + [0, 0, -5]
+    ])
     return points
+    
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
