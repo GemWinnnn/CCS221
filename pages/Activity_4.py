@@ -122,9 +122,10 @@ init_sphere = _sphere_(center=(0, 0, 0), radius=3)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
 # Define colors for each object
-rectangular_prism_color = matplotlib.colormaps.viridis(0.5)
-sphere_color = matplotlib.colormaps.viridis(0.2)
-pyramid_color = matplotlib.colormaps.viridis(0.8)
+rectangular_prism_color = matplotlib.cm.viridis(0.5)
+sphere_color = matplotlib.cm.viridis(0.2)
+pyramid_color = matplotlib.cm.viridis(0.8)
+
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
