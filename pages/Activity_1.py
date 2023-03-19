@@ -88,10 +88,8 @@ def main():
     choice = st.sidebar.selectbox("Choose an Algorithm", algorithms)
 
     if choice == "DDA":
-        st.sidebar.markdown("### Enter the Coordinates")
         main_DDA()
     elif choice == "Bresenham":
-        st.sidebar.markdown("### Enter the Coordinates")
         main_bres()
 
 if __name__ == '__main__':
