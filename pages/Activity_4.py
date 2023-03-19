@@ -81,7 +81,7 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
     return points
 
 
-def _sphere_(center=(0, 0, 0), radius=1, num_steps=20):
+def _sphere_(center=(0, 0, 0), radius=3, num_steps=20):
     center = np.array(center)
     u = np.linspace(0, 2 * np.pi, num_steps)
     v = np.linspace(0, np.pi, num_steps)
@@ -97,7 +97,7 @@ def translate_obj(points, amount):
 
 # Initialize objects
 init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
-init_sphere = _sphere_(center=(0, 0, 0), radius=2)
+init_sphere = _sphere_(center=(0, 0, 0), radius=3)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
 # Define colors for each object
