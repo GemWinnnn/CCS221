@@ -115,7 +115,7 @@ def create_rectangular_prism(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
     return points
 
 
-def _sphere_(center=(0, 0, 0), radius=1, num_steps=20):
+def create_sphere(center=(0, 0, 0), radius=1, num_steps=20):
     center = np.array(center)
     u = np.linspace(0, 2 * np.pi, num_steps)
     v = np.linspace(0, np.pi, num_steps)
@@ -160,7 +160,7 @@ separated_pyramid = separated_pyramid.numpy()
 # Separate the objects based on the separation slider value
 separation_vector = tf.constant([separation, 0, 0], dtype=tf.float32)
 separated_sphere = translate_obj(translated_sphere, separation_vector)
-separated_object = translate_obj(translated_object, 2 * separation_vector)
+separated_object = translate_obj(translated_pyramid, 2 * separation_vector)
 
 # Convert translated and separated objects to NumPy arrays
 translated_rectangular_prism = translated_rectangular_prism.numpy()
