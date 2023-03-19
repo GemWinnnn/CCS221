@@ -13,8 +13,11 @@ y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
 z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
 
-def _plt_basic_object_(points):
-    tri = Delaunay(points).convex_hull
+def _plt_basic_object_(points, object_type="general"):
+    if object_type == "pyramid":
+        tri = np.array([[0, 1, 2], [0, 1, 4], [1, 2, 4], [0, 2, 4], [2, 3, 4]])
+    else:
+        tri = Delaunay(points).convex_hull
 
     # Create a colormap to assign colors based on the Z-coordinate of the vertices
     colormap = plt.cm.get_cmap("viridis")
@@ -23,12 +26,12 @@ def _plt_basic_object_(points):
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    
+
     # Create Poly3DCollection and set facecolors
     polyc = art3d.Poly3DCollection(points[tri])
     polyc.set_facecolor(face_colors)
     ax.add_collection(polyc)
-    
+
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
@@ -111,11 +114,10 @@ translated_object = translated_object.numpy()
 # Plot initial objects
 _plt_basic_object_(init_rectangular_prism)
 _plt_basic_object_(init_sphere)
-_plt_basic_object_(init_pyramid)
-
+_plt_basic_object_(init_pyramid, object_type="pyramid")
 
 # Plot translated objects
 st.header("Translated Objects")
 _plt_basic_object_(translated_rectangular_prism)
 _plt_basic_object_(translated_sphere)
-_plt_basic_object_(translated_object)
+_plt_basic_object_(translated_object, object_type="pyramid")
