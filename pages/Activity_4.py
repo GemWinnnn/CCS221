@@ -35,17 +35,27 @@ def _plt_basic_object_(points):
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    
+
+    if len(points) == 5:  # Check if the object is a pyramid
+        tri = np.array([
+            [0, 1, 4],
+            [1, 2, 4],
+            [2, 3, 4],
+            [3, 0, 4],
+            [0, 1, 2, 3]
+        ])
+
     # Create Poly3DCollection and set facecolors
     polyc = art3d.Poly3DCollection(points[tri])
     polyc.set_facecolor(face_colors)
     ax.add_collection(polyc)
-    
+
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
     st.pyplot(fig)
+
 
 
 
