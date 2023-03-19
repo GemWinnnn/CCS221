@@ -19,19 +19,8 @@ z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
 
 # Define a function to plot the initial and translated objects
-def plot_objects(initial_points, translated_points, title):
-    st.subheader(title)
-    st.write("Initial Object")
-    _plt_basic_object_(initial_points)
-    st.write("Translated Object")
-    _plt_basic_object_(translated_points)
-
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
-
-    # Create a colormap to assign colors based on the Z-coordinate of the vertices
-    colormap = matplotlib.colormaps.get_cmap("viridis")
-    z_range = points[:, 2].max() - points[:, 2].min()
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
@@ -46,10 +35,19 @@ def _plt_basic_object_(points):
             [0, 2, 3]
         ])
         
-        # Assign colors to the pyramid faces based on their average Z-coordinate
-        face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
+        # Assign distinct colors to the pyramid faces
+        face_colors = np.array([
+            [1, 0, 0, 1],  # Red
+            [0, 1, 0, 1],  # Green
+            [0, 0, 1, 1],  # Blue
+            [1, 1, 0, 1],  # Yellow
+            [1, 0, 1, 1],  # Magenta
+            [0, 1, 1, 1],  # Cyan
+        ])
     else:
-        # Assign colors to other shapes based on the Z-coordinate of the vertices
+        # Create a colormap to assign colors based on the Z-coordinate of the vertices
+        colormap = matplotlib.colormaps.get_cmap("viridis")
+        z_range = points[:, 2].max() - points[:, 2].min()
         face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
     # Create Poly3DCollection and set facecolors
@@ -62,8 +60,6 @@ def _plt_basic_object_(points):
     ax.set_zlim3d(-15, 15)
 
     st.pyplot(fig)
-
-
 
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
