@@ -33,10 +33,10 @@ def DDALine(x1, y1, x2, y2):
     plt.title("DDA Algorithm")
 
 def main_DDA():
-    x1 = st.number_input("Enter X1: ")
-    y1 = st.number_input("Enter Y1: ")
-    x2 = st.number_input("Enter X2: ")
-    y2 = st.number_input("Enter Y2: ")
+    x1 = st.number_input("Enter the Starting point of x: ")
+    y1 = st.number_input("Enter the Starting point of y: ")
+    x2 = st.number_input("Enter the end point of x: ")
+    y2 = st.number_input("Enter the end point of y: ")
     DDALine(x1, y1, x2, y2)
     midX = (x1 + x2) / 2
     midY = (y1 + y2) / 2
