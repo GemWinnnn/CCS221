@@ -10,7 +10,7 @@ import streamlit as st
 st.title("3D Object Translator")
 
 # Add dropdown to select shapes
-shape_options = ["Rectangular Prism", "Sphere", "Pyramid","Heart"]
+shape_options = ["Rectangular Prism", "Sphere", "Pyramid","Diamond"]
 selected_shape = st.sidebar.selectbox("Choose a shape to display:", shape_options)
 
 x = st.sidebar.slider("Enter the x component of the vector:", -10.0, 10.0, 0.0)
@@ -70,7 +70,7 @@ def plot_objects(initial_points, translated_points, title):
     _plt_basic_object_(translated_points)
 
 # Define shape points
-def _heart_(bottom_center = (0, 0, 0)):
+def _diamond_(bottom_center = (0, 0, 0)):
     bottom_center = np.array(bottom_center)
     points = np.vstack([
         bottom_center + [+1.5, -1, +3.5],
@@ -135,32 +135,32 @@ def translate_obj(points, amount):
 init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
 init_sphere = _sphere_(center=(0, 0, 0), radius=3)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
-init_heart = _heart_(bottom_center=(0,0,0))
+init_diamond = _diamond_(bottom_center=(0,0,0))
 
 # Define colors for each object
 rectangular_prism_color = matplotlib.cm.viridis(0.5)
 sphere_color = matplotlib.cm.viridis(0.2)
 pyramid_color = matplotlib.cm.viridis(0.8)
-heart_color = matplotlib.cm.viridis(0.8)
+diamond_color = matplotlib.cm.viridis(0.8)
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
 points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
-points_heart = tf.constant(init_heart, dtype=tf.float32) 
+points_diamond = tf.constant(init_diamond, dtype=tf.float32) 
 
 # Translate the objects
 translated_rectangular_prism = translate_obj(rectangular_prism_points, translation_amount)
 translated_sphere = translate_obj(sphere_points, translation_amount)
 translated_object = translate_obj(points_pyramid2, translation_amount)
-translated_heart = translate_obj(points_heart, translation_amount)
+translated_diamond = translate_obj(points_diamond, translation_amount)
 
 
 # Convert translated objects to NumPy arrays
 translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
-translated_heart = translated_heart.numpy()
+translated_diamond = translated_diamond.numpy()
 
 # Plot the selected shape
 if selected_shape == "Rectangular Prism":
@@ -169,5 +169,5 @@ elif selected_shape == "Sphere":
     plot_objects(init_sphere, translated_sphere, "Sphere")
 elif selected_shape == "Pyramid":
     plot_objects(init_pyramid, translated_object, "Pyramid")
-elif selected_shape == "Heart":
-    plot_objects(init_heart, translated_heart, "Heart")
+elif selected_shape == "Diamond":
+    plot_objects(init_diamond, translated_diamond, "Diamond")
