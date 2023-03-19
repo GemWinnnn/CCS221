@@ -161,7 +161,7 @@ translated_heart = translate_obj(points_heart, translation_amount).numpy()
 translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
-translated_heart = translated_heart.numpy(),counter
+translated_heart = translated_heart.numpy()
 
 # Plot the selected shape
 if selected_shape == "Rectangular Prism":
