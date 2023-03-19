@@ -61,6 +61,14 @@ def _plt_basic_object_(points):
 
     st.pyplot(fig)
 
+# Define a function to plot the initial and translated objects
+def plot_objects(initial_points, translated_points, title):
+    st.subheader(title)
+    st.write("Initial Object")
+    _plt_basic_object_(initial_points)
+    st.write("Translated Object")
+    _plt_basic_object_(translated_points)
+
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
@@ -114,9 +122,9 @@ init_sphere = _sphere_(center=(0, 0, 0), radius=3)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
 # Define colors for each object
-rectangular_prism_color = plt.cm.get_cmap("viridis")(0.5)
-sphere_color = plt.cm.get_cmap("viridis")(0.2)
-pyramid_color = plt.cm.get_cmap("viridis")(0.8)
+rectangular_prism_color = matplotlib.colormaps.viridis(0.5)
+sphere_color = matplotlib.colormaps.viridis(0.2)
+pyramid_color = matplotlib.colormaps.viridis(0.8)
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
