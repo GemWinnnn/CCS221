@@ -42,14 +42,15 @@ def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
 
     points = np.array([
         bottom_lower + [half_side, 0, half_side],
-        bottom_lower + [0, half_side, side_length],
-        bottom_lower + [side_length, half_side, side_length],
-        bottom_lower + [0, half_side, 0],
-        bottom_lower + [side_length, half_side, 0],
+        bottom_lower + [0, half_side, side_length / 2],
+        bottom_lower + [side_length / 2, half_side, side_length],
+        bottom_lower + [side_length, half_side, side_length / 2],
+        bottom_lower + [side_length / 2, half_side, 0],
         bottom_lower + [half_side, side_length, half_side]
     ])
 
     return points
+
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
@@ -125,8 +126,7 @@ translated_object = translated_object.numpy()
 _plt_basic_object_(init_diamond)
 _plt_basic_object_(init_rectangular_prism)
 _plt_basic_object_(init_sphere)
-_plt_basic_object_(points_pyramid2)
-
+_plt_basic_object_(init_pyramid.numpy())
 
 # Plot translated objects
 st.header("Translated Objects")
