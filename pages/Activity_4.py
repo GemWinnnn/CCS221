@@ -4,7 +4,6 @@ from mpl_toolkits.mplot3d import Axes3D, art3d
 from scipy.spatial import Delaunay
 import tensorflow as tf
 import streamlit as st
-from streamlit_mpl_carousel import mpl_carousel
 
 # Add Streamlit components
 st.title("3D Object Translator")
@@ -13,15 +12,23 @@ x = st.sidebar.slider("Enter the x component of the vector:", -10.0, 10.0, 0.0)
 y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
 z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-separation = st.sidebar.slider("Enter the separation between shapes:", 0.0, 20.0, 0.0)
 
-def _plt_basic_object_(points, object_type="general"):
+separation = st.sidebar.slider("Enter the separation between shapes:", -10.0, 10.0, 0.0)
+
+# Add a select box for choosing the visualization
+visualization_options = [
+    "Initial",
+    "Translated",
+    "Separated"
+]
+
+# Plotting function for individual shapes
+def plot_shape(points, object_type="general", title=None):
     if object_type == "pyramid":
         tri = np.array([[0, 1, 2], [0, 1, 4], [1, 2, 4], [0, 2, 4], [2, 3, 4]])
     else:
         tri = Delaunay(points).convex_hull
 
-    # Create a colormap to assign colors based on the Z-coordinate of the vertices
     colormap = plt.cm.get_cmap("viridis")
     z_range = points[:, 2].max() - points[:, 2].min()
     face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
@@ -29,7 +36,6 @@ def _plt_basic_object_(points, object_type="general"):
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
 
-    # Create Poly3DCollection and set facecolors
     polyc = art3d.Poly3DCollection(points[tri])
     polyc.set_facecolor(face_colors)
     ax.add_collection(polyc)
@@ -38,25 +44,55 @@ def _plt_basic_object_(points, object_type="general"):
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
-    mpl_carousel(fig)
+    if title:
+        ax.set_title(title)
 
+    return fig
 
-
-def _pyramid2_(bottom_center=(0, 0, 0)):
+# Functions to define the initial shapes
+def create_pyramid(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
 
     points = np.vstack([
-    bottom_center + [-3, -3, 0],
-    bottom_center + [-3, +3, 0],
-    bottom_center + [+3, -3, 0],
-    bottom_center + [+3, +3, 0],
-    bottom_center + [0, 0, +5]
+        bottom_center + [-3, -3, 0],
+        bottom_center + [-3, +3, 0],
+        bottom_center + [+3, -3, 0],
+        bottom_center + [+3, +3, 0],
+        bottom_center + [0, 0, +5]
     ])
 
     return points
 
+def create_rectangular_prism(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
+    bottom_lower = np.array(bottom_lower)
+    side_lengths = np.array(side_lengths)
 
-def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_lengths[1], 0],
+        bottom_lower + [side_lengths[0], side_lengths[1], 0],
+        bottom_lower + [side_lengths[0], 0, 0],
+        bottom_lower + [0, 0, side_lengths[2]],
+        bottom_lower + [0, side_lengths[1], side_lengths[2]],
+        bottom_lower + [
+
+
+
+# Functions to define the initial shapes
+def create_pyramid(bottom_center=(0, 0, 0)):
+    bottom_center = np.array(bottom_center) 
+
+    points = np.vstack([
+        bottom_center + [-3, -3, 0],
+        bottom_center + [-3, +3, 0],
+        bottom_center + [+3, -3, 0],
+        bottom_center + [+3, +3, 0],
+        bottom_center + [0, 0, +5]
+    ])
+
+    return points
+
+def create_rectangular_prism(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
     bottom_lower = np.array(bottom_lower)
     side_lengths = np.array(side_lengths)
 
@@ -69,6 +105,7 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
         bottom_lower + [0, side_lengths[1], side_lengths[2]],
         bottom_lower + [side_lengths[0], side_lengths[1], side_lengths[2]],
         bottom_lower + [side_lengths[0], 0, side_lengths[2]],
+
     ])
 
     return points
@@ -89,24 +126,32 @@ def translate_obj(points, amount):
     return tf.add(points, amount)
 
 # Initialize objects
-init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
-init_sphere = _sphere_(center=(0, 0, 0), radius=2)
-init_pyramid = _pyramid2_(bottom_center=(0,0,0))
+init_rectangular_prism = create_rectangular_prism(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
+init_sphere = create_sphere(center=(0, 0, 0), radius=2)
+init_pyramid = create_pyramid(bottom_center=(0, 0, 0))
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
-points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
+points_pyramid = tf.constant(init_pyramid, dtype=tf.float32)
 
-# Translate the objects
+# Translate and seperate the objects 
 translated_rectangular_prism = translate_obj(rectangular_prism_points, translation_amount)
 translated_sphere = translate_obj(sphere_points, translation_amount)
-translated_object = translate_obj(points_pyramid2, translation_amount)
+translated_pyramid = translate_obj(points_pyramid, translation_amount)
 
-# Convert translated objects to NumPy arrays
+separated_rectangular_prism = translate_obj(rectangular_prism_points, tf.constant([0, separation, 0], dtype=tf.float32))
+separated_sphere = translate_obj(sphere_points, tf.constant([separation, 0, 0], dtype=tf.float32))
+separated_pyramid = translate_obj(points_pyramid, tf.constant([0, -separation, 0], dtype=tf.float32))
+
+# Convert translated and separated objects to NumPy arrays
 translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
-translated_object = translated_object.numpy()
+translated_pyramid = translated_pyramid.numpy()
+
+separated_rectangular_prism = separated_rectangular_prism.numpy()
+separated_sphere = separated_sphere.numpy()
+separated_pyramid = separated_pyramid.numpy()
 
 # Separate the objects based on the separation slider value
 separation_vector = tf.constant([separation, 0, 0], dtype=tf.float32)
@@ -118,20 +163,39 @@ translated_rectangular_prism = translated_rectangular_prism.numpy()
 separated_sphere = separated_sphere.numpy()
 separated_object = separated_object.numpy()
 
-# Plot initial objects
-st.header("Initial Objects")
-_plt_basic_object_(init_rectangular_prism)
-_plt_basic_object_(init_sphere)
-_plt_basic_object_(init_pyramid, object_type="pyramid")
+# Display the selected visualization for each shape
+shape_options = ["Rectangular Prism", "Sphere", "Pyramid"]
+selected_shape = st.sidebar.selectbox("Choose a shape:", shape_options)
 
-# Plot translated objects
-st.header("Translated Objects")
-_plt_basic_object_(translated_rectangular_prism)
-_plt_basic_object_(translated_sphere)
-_plt_basic_object_(translated_object, object_type="pyramid")
+if selected_shape == "Rectangular Prism":
+    if "Initial" in visualization_options:
+        st.header("Initial Rectangular Prism")
+        st.pyplot(plot_shape(init_rectangular_prism, title="Initial Rectangular Prism"))
+    if "Translated" in visualization_options:
+        st.header("Translated Rectangular Prism")
+        st.pyplot(plot_shape(translated_rectangular_prism, title="Translated Rectangular Prism"))
+    if "Separated" in visualization_options:
+        st.header("Separated Rectangular Prism")
+        st.pyplot(plot_shape(separated_rectangular_prism, title="Separated Rectangular Prism"))
 
-# Plot separated objects
-st.header("Separated Objects")
-_plt_basic_object_(translated_rectangular_prism)
-_plt_basic_object_(separated_sphere)
-_plt_basic_object_(separated_object, object_type="pyramid")
+elif selected_shape == "Sphere":
+    if "Initial" in visualization_options:
+        st.header("Initial Sphere")
+        st.pyplot(plot_shape(init_sphere, title="Initial Sphere"))
+    if "Translated" in visualization_options:
+        st.header("Translated Sphere")
+        st.pyplot(plot_shape(translated_sphere, title="Translated Sphere"))
+    if "Separated" in visualization_options:
+        st.header("Separated Sphere")
+        st.pyplot(plot_shape(separated_sphere, title="Separated Sphere"))
+
+elif selected_shape == "Pyramid":
+    if "Initial" in visualization_options:
+        st.header("Initial Pyramid")
+        st.pyplot(plot_shape(init_pyramid, object_type="pyramid", title="Initial Pyramid"))
+    if "Translated" in visualization_options:
+        st.header("Translated Pyramid")
+        st.pyplot(plot_shape(translated_pyramid, object_type="pyramid", title="Translated Pyramid"))
+    if "Separated" in visualization_options:
+        st.header("Separated Pyramid")
+        st.pyplot(plot_shape(separated_pyramid, object_type="pyramid", title="Separated Pyramid"))
