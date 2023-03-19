@@ -32,7 +32,6 @@ def _plt_basic_object_(points):
     # Create a colormap to assign colors based on the Z-coordinate of the vertices
     colormap = matplotlib.colormaps.get_cmap("viridis")
     z_range = points[:, 2].max() - points[:, 2].min()
-    face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
@@ -46,21 +45,24 @@ def _plt_basic_object_(points):
             [0, 1, 2],
             [0, 2, 3]
         ])
+        
+        # Assign colors to the pyramid faces based on their average Z-coordinate
+        face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
+    else:
+        # Assign colors to other shapes based on the Z-coordinate of the vertices
+        face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
     # Create Poly3DCollection and set facecolors
     polyc = art3d.Poly3DCollection(points[tri])
     polyc.set_facecolor(face_colors)
     ax.add_collection(polyc)
 
-     # Add markers for vertices
-    for p in points:
-        ax.scatter(p[0], p[1], p[2], c="red", marker="o", s=50)
-
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
     st.pyplot(fig)
+
 
 
 
