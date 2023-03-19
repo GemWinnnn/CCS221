@@ -17,16 +17,18 @@ def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
     # Create a colormap to assign colors based on the Z-coordinate of the vertices
-    colormap = plt.cm.get_cmap("viridis")
+    colormap = mpl.colormaps.get_cmap("viridis")
     z_range = points[:, 2].max() - points[:, 2].min()
     face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2],
-                        triangles=tri,
-                        shade=True, facecolors=face_colors, lw=0.5)
-
+    
+    # Create Poly3DCollection and set facecolors
+    polyc = mpl.art3d.Poly3DCollection(points[tri])
+    polyc.set_facecolor(face_colors)
+    ax.add_collection(polyc)
+    
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
