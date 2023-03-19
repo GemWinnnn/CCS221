@@ -88,6 +88,11 @@ init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5,
 init_sphere = _sphere_(center=(0, 0, 0), radius=2)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
+# Define colors for each object
+rectangular_prism_color = plt.cm.get_cmap("viridis")(0.5)
+sphere_color = plt.cm.get_cmap("viridis")(0.2)
+pyramid_color = plt.cm.get_cmap("viridis")(0.8)
+
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
