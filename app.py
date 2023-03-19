@@ -5,4 +5,4 @@ from io import StringIO
 import pandas as pd
 
 st.title("Midterm Test")
-st.header("submitted by: Group 9 ")
+st.write("submitted by: Group 9 ")
