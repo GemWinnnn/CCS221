@@ -37,6 +37,6 @@ st.components.v1.html(
     </div>
     """
 )
-st.set_page_config(page_title="My App", page_icon=":rocket:", layout="wide", initial_sidebar_state="collapsed", bootstrap=True)
+st.set_page_config(page_title="My App", page_icon=":rocket:", layout="wide", initial_sidebar_state="expanded", bootstrap=True)
 
 st.image("https://assets.entrepreneur.com/content/3x2/2000/1649279368-Ent-2022Python.jpeg?crop=4:3")
