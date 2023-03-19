@@ -29,7 +29,7 @@ def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
     # Create a colormap to assign colors based on the Z-coordinate of the vertices
-    colormap = plt.cm.get_cmap("viridis")
+    colormap = matplotlib.colormaps.get_cmap("viridis")
     z_range = points[:, 2].max() - points[:, 2].min()
     face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
@@ -42,7 +42,8 @@ def _plt_basic_object_(points):
             [1, 2, 4],
             [2, 3, 4],
             [3, 0, 4],
-            [0, 1, 2, 3]
+            [0, 1, 2],
+            [0, 2, 3]
         ])
 
     # Create Poly3DCollection and set facecolors
@@ -55,7 +56,6 @@ def _plt_basic_object_(points):
     ax.set_zlim3d(-15, 15)
 
     st.pyplot(fig)
-
 
 
 
