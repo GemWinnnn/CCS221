@@ -8,14 +8,14 @@ import streamlit as st
 # Add Streamlit components
 st.title("3D Object Translator")
 
+# Add dropdown to select shapes
+shape_options = ["Rectangular Prism", "Sphere", "Pyramid"]
+selected_shape = st.sidebar.selectbox("Choose a shape to display:", shape_options)
+
 x = st.sidebar.slider("Enter the x component of the vector:", -10.0, 10.0, 0.0)
 y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
 z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
-
-# Add dropdown to select shapes
-shape_options = ["Rectangular Prism", "Sphere", "Pyramid"]
-selected_shape = st.sidebar.selectbox("Choose a shape to display:", shape_options)
 
 # Define a function to plot the initial and translated objects
 def plot_objects(initial_points, translated_points, title):
