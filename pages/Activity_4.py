@@ -74,7 +74,11 @@ def create_rectangular_prism(bottom_lower=(0, 0, 0), side_lengths=(1, 1, 1)):
         bottom_lower + [side_lengths[0], 0, 0],
         bottom_lower + [0, 0, side_lengths[2]],
         bottom_lower + [0, side_lengths[1], side_lengths[2]],
-        bottom_lower + [
+        bottom_lower + [side_lengths[0], side_lengths[1], side_lengths[2]],
+        bottom_lower + [side_lengths[0], 0, side_lengths[2]],
+])
+
+    return points
 
 
 
