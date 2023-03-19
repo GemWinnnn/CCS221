@@ -84,7 +84,7 @@ def _heart_(bottom_center = (0, 0, 0)):
         bottom_center + [0, 1, -2],
         bottom_center + [0, -1, -2]
     ])
-    
+
     return points
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
@@ -172,4 +172,4 @@ elif selected_shape == "Sphere":
 elif selected_shape == "Pyramid":
     plot_objects(init_pyramid, translated_object, "Pyramid")
 elif selected_shape == "Heart":
-    plot_objects(init_heart, translated_object, "Heart")
+    plot_objects(init_heart, translated_heart, "Heart")
