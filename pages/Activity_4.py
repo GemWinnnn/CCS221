@@ -13,6 +13,18 @@ y = st.sidebar.slider("Enter the y component of the vector:", -10.0, 10.0, 0.0)
 z = st.sidebar.slider("Enter the z component of the vector:", -10.0, 10.0, 0.0)
 translation_amount = tf.constant([x, y, z], dtype=tf.float32)
 
+# Add dropdown to select shapes
+shape_options = ["Rectangular Prism", "Sphere", "Pyramid"]
+selected_shape = st.sidebar.selectbox("Choose a shape to display:", shape_options)
+
+# Define a function to plot the initial and translated objects
+def plot_objects(initial_points, translated_points, title):
+    st.subheader(title)
+    st.write("Initial Object")
+    _plt_basic_object_(initial_points)
+    st.write("Translated Object")
+    _plt_basic_object_(translated_points)
+
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
@@ -108,14 +120,10 @@ translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
 
-# Plot initial objects
-_plt_basic_object_(init_rectangular_prism)
-_plt_basic_object_(init_sphere)
-_plt_basic_object_(init_pyramid)
-
-
-# Plot translated objects
-st.header("Translated Objects")
-_plt_basic_object_(translated_rectangular_prism)
-_plt_basic_object_(translated_sphere)
-_plt_basic_object_(translated_object)
+# Plot the selected shape
+if selected_shape == "Rectangular Prism":
+    plot_objects(init_rectangular_prism, translated_rectangular_prism, "Rectangular Prism")
+elif selected_shape == "Sphere":
+    plot_objects(init_sphere, translated_sphere, "Sphere")
+elif selected_shape == "Pyramid":
+    plot_objects(init_pyramid, translated_object, "Pyramid")
