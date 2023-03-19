@@ -16,24 +16,16 @@ translation_amount = tf.constant([x, y, z], dtype=tf.float32)
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
-    # Define a color for each face
-    face_colors = np.array([
-        [1, 0, 0],  # red
-        [0, 1, 0],  # green
-        [0, 0, 1],  # blue
-        [1, 1, 0],  # yellow
-        [1, 0, 1],  # magenta
-        [0, 1, 1],  # cyan
-    ])
+    # Create a colormap to assign colors based on the Z-coordinate of the vertices
+    colormap = plt.cm.get_cmap("viridis")
+    z_range = points[:, 2].max() - points[:, 2].min()
+    face_colors = colormap((points[tri].mean(axis=1)[:, 2] - points[:, 2].min()) / z_range)
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
     S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2],
                         triangles=tri,
-                        shade=True, lw=0.5)
-
-    # Set facecolors of the Poly3DCollection
-    S.set_facecolors(face_colors)
+                        shade=True, facecolors=face_colors, lw=0.5)
 
     ax.set_xlim3d(-15, 15)
     ax.set_ylim3d(-15, 15)
@@ -44,14 +36,15 @@ def _plt_basic_object_(points):
 
 def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
     bottom_lower = np.array(bottom_lower)
+    half_side = side_length / 2
 
-    points = np.vstack([
-        bottom_lower + [side_length / 2, 0, side_length / 2],
-        bottom_lower + [0, side_length / 2, side_length / 2],
-        bottom_lower + [side_length / 2, side_length / 2, 0],
-        bottom_lower + [side_length / 2, side_length / 2, side_length],
-        bottom_lower + [side_length, side_length / 2, side_length / 2],
-        bottom_lower + [side_length / 2, side_length, side_length / 2],
+    points = np.array([
+        bottom_lower + [half_side, 0, half_side],
+        bottom_lower + [0, half_side, side_length],
+        bottom_lower + [side_length, half_side, side_length],
+        bottom_lower + [0, half_side, 0],
+        bottom_lower + [side_length, half_side, 0],
+        bottom_lower + [half_side, side_length, half_side]
     ])
 
     return points
