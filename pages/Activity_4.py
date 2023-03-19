@@ -69,7 +69,7 @@ def plot_objects(initial_points, translated_points, title):
     st.write("Translated Object")
     _plt_basic_object_(translated_points)
 
-
+# Define shape points
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
 
@@ -112,7 +112,6 @@ def _sphere_(center=(0, 0, 0), radius=3, num_steps=20):
     points = np.vstack([x.flatten(), y.flatten(), z.flatten()]).T
     return points
 
-
 def translate_obj(points, amount):
     return tf.add(points, amount)
 
@@ -125,7 +124,6 @@ init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 rectangular_prism_color = matplotlib.cm.viridis(0.5)
 sphere_color = matplotlib.cm.viridis(0.2)
 pyramid_color = matplotlib.cm.viridis(0.8)
-
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
