@@ -39,7 +39,8 @@ def _plt_basic_object_(points):
     ax.set_ylim3d(-15, 15)
     ax.set_zlim3d(-15, 15)
 
-    return fig
+    st.pyplot(fig)
+
 
 def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
     bottom_lower = np.array(bottom_lower)
@@ -126,15 +127,15 @@ translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
 
 # Plot initial objects
-st.header("Initial Objects")
-st.pyplot(_plt_basic_object_(init_diamond))
-st.pyplot(_plt_basic_object_(init_rectangular_prism))
-st.pyplot(_plt_basic_object_(init_sphere))
-st.pyplot(_plt_basic_object_(points_pyramid2))
+_plt_basic_object_(init_diamond)
+_plt_basic_object_(init_rectangular_prism)
+_plt_basic_object_(init_sphere)
+_plt_basic_object_(points_pyramid2)
+
 
 # Plot translated objects
 st.header("Translated Objects")
-st.pyplot(_plt_basic_object_(translated_diamond))
-st.pyplot(_plt_basic_object_(translated_rectangular_prism))
-st.pyplot(_plt_basic_object_(translated_sphere))
-st.pyplot(_plt_basic_object_(translated_object))
+_plt_basic_object_(translated_diamond)
+_plt_basic_object_(translated_rectangular_prism)
+_plt_basic_object_(translated_sphere)
+_plt_basic_object_(translated_object)
