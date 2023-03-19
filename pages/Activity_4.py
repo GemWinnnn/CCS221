@@ -170,4 +170,4 @@ elif selected_shape == "Sphere":
 elif selected_shape == "Pyramid":
     plot_objects(init_pyramid, translated_object, "Pyramid")
 elif selected_shape == "Heart":
-    plot_objects(init_pyramid, translated_object, "Heart")
+    plot_objects(init_heart, translated_object, "Heart")
