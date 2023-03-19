@@ -84,6 +84,7 @@ def _heart_(bottom_center = (0, 0, 0)):
         bottom_center + [0, 1, -2],
         bottom_center + [0, -1, -2]
     ])
+    
     return points
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
@@ -141,6 +142,7 @@ init_heart = _heart_(bottom_center=(0,0,0))
 rectangular_prism_color = matplotlib.cm.viridis(0.5)
 sphere_color = matplotlib.cm.viridis(0.2)
 pyramid_color = matplotlib.cm.viridis(0.8)
+heart_color = matplotlib.cm.viridis(0.8)
 
 # Convert objects to TensorFlow tensors
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
@@ -160,7 +162,7 @@ translated_heart = translate_obj(points_heart, translation_amount)
 translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
-translated_heart = translated_heart.numpy()
+translated_heart = translated_heart.numpy(),counter
 
 # Plot the selected shape
 if selected_shape == "Rectangular Prism":
