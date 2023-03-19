@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 from mpl_toolkits.mplot3d import Axes3D, art3d
 from scipy.spatial import Delaunay
 import tensorflow as tf
