@@ -6,4 +6,4 @@ import pandas as pd
 
 st.title("Midterm Test")
 st.write("submitted by: Group 9 ")
-st.image("https://media4.giphy.com/media/scZPhLqaVOM1qG4lT9/200w.gif?cid=6c09b952359tlge3n43rxhtep5qdc2i0itxpl4bw16nia7bg&rid=200w.gif&ct=g")
+st.image("https://media.tenor.com/gj6ZITvG01QAAAAC/code-review-silicon-valley.gif")
