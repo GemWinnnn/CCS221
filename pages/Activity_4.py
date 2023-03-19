@@ -25,7 +25,7 @@ def _plt_basic_object_(points):
     ax = fig.add_subplot(111, projection='3d')
     
     # Create Poly3DCollection and set facecolors
-    polyc = mpl.art3d.Poly3DCollection(points[tri])
+    polyc = art3d.Poly3DCollection(points[tri])
     polyc.set_facecolor(face_colors)
     ax.add_collection(polyc)
     
