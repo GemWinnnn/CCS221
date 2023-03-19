@@ -36,21 +36,6 @@ def _plt_basic_object_(points):
     st.pyplot(fig)
 
 
-def _diamond_(bottom_lower=(0, 0, 0), side_length=5):
-    bottom_lower = np.array(bottom_lower)
-    half_side = side_length / 2
-
-    points = np.array([
-        bottom_lower + [half_side, 0, half_side],
-        bottom_lower + [0, half_side, side_length / 2],
-        bottom_lower + [side_length / 2, half_side, side_length],
-        bottom_lower + [side_length, half_side, side_length / 2],
-        bottom_lower + [side_length / 2, half_side, 0],
-        bottom_lower + [half_side, side_length, half_side]
-    ])
-
-    return points
-
 
 def _pyramid2_(bottom_center=(0, 0, 0)):
     bottom_center = np.array(bottom_center) 
@@ -99,31 +84,26 @@ def translate_obj(points, amount):
     return tf.add(points, amount)
 
 # Initialize objects
-init_diamond = _diamond_(bottom_lower=(1, 2, 3), side_length=10)
 init_rectangular_prism = _rectangle_(bottom_lower=(1, 2, 5), side_lengths=(7, 5, 4))
 init_sphere = _sphere_(center=(0, 0, 0), radius=2)
 init_pyramid = _pyramid2_(bottom_center=(0,0,0))
 
 # Convert objects to TensorFlow tensors
-diamond_points = tf.constant(init_diamond, dtype=tf.float32)
 rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
 points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
 
 # Translate the objects
-translated_diamond = translate_obj(diamond_points, translation_amount)
 translated_rectangular_prism = translate_obj(rectangular_prism_points, translation_amount)
 translated_sphere = translate_obj(sphere_points, translation_amount)
 translated_object = translate_obj(points_pyramid2, translation_amount)
 
 # Convert translated objects to NumPy arrays
-translated_diamond = translated_diamond.numpy()
 translated_rectangular_prism = translated_rectangular_prism.numpy()
 translated_sphere = translated_sphere.numpy()
 translated_object = translated_object.numpy()
 
 # Plot initial objects
-_plt_basic_object_(init_diamond)
 _plt_basic_object_(init_rectangular_prism)
 _plt_basic_object_(init_sphere)
 _plt_basic_object_(init_pyramid)
@@ -131,7 +111,6 @@ _plt_basic_object_(init_pyramid)
 
 # Plot translated objects
 st.header("Translated Objects")
-_plt_basic_object_(translated_diamond)
 _plt_basic_object_(translated_rectangular_prism)
 _plt_basic_object_(translated_sphere)
 _plt_basic_object_(translated_object)
