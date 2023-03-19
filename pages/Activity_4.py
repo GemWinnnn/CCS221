@@ -149,13 +149,12 @@ rectangular_prism_points = tf.constant(init_rectangular_prism, dtype=tf.float32)
 sphere_points = tf.constant(init_sphere, dtype=tf.float32)
 points_pyramid2 = tf.constant(init_pyramid, dtype=tf.float32)
 points_heart = tf.constant(init_heart, dtype=tf.float32) 
-counter = 2
 
 # Translate the objects
 translated_rectangular_prism = translate_obj(rectangular_prism_points, translation_amount)
 translated_sphere = translate_obj(sphere_points, translation_amount)
 translated_object = translate_obj(points_pyramid2, translation_amount)
-translated_heart = translate_obj(points_heart, translation_amount)
+translated_heart = translate_obj(points_heart, translation_amount).numpy()
 
 
 # Convert translated objects to NumPy arrays
