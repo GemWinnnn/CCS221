@@ -85,7 +85,7 @@ def main():
     st.title("Line Drawing Algorithms")
     st.sidebar.title("Choose an Algorithm")
     algorithms = ["DDA", "Bresenham"]
-    choice = st.sidebar.selectbox(algorithms)
+    choice = st.sidebar.selectbox("Algorithms",algorithms)
 
     if choice == "DDA":
         main_DDA()
