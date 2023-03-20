@@ -83,9 +83,9 @@ def main_bres():
 # Main function for Stream
 def main():
     st.title("Line Drawing Algorithms")
-    st.sidebar.title("Select Algorithm")
+    st.sidebar.title("Choose an Algorithm")
     algorithms = ["DDA", "Bresenham"]
-    choice = st.sidebar.selectbox("Choose an Algorithm", algorithms)
+    choice = st.sidebar.selectbox(algorithms)
 
     if choice == "DDA":
         main_DDA()
