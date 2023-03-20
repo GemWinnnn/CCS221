@@ -28,32 +28,33 @@ def main():
 
     # If an image is uploaded
     if uploaded_file is not None:
-    # Set the title for the translation example
+        # Set the title for the translation example
         st.title("Translation Example")
-    
-    # Ask the user to input the X and Y values for the translation
-    tx_1 = st.sidebar.number_input("X Value:", value=0)
-    ty_1 = st.sidebar.number_input("Y Value:", value=0)
-    
-    # Define the old and new coordinates for the transformation
-    BXold = 0
-    BYold = 0
-    BXnew = BXold + tx_1
-    BYnew = BYold + ty_1
 
-    img_bytes = np.asarray(bytearray(uploaded_file.read()), dtype = np.uint8)
+        # Ask the user to input the X and Y values for the translation
+        tx_1 = st.sidebar.number_input("X Value:", value=0)
+        ty_1 = st.sidebar.number_input("Y Value:", value=0)
 
-    img = cv2.imdecode (img_bytes,1)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # Define the old and new coordinates for the transformation
+        BXold = 0
+        BYold = 0
+        BXnew = BXold + tx_1
+        BYnew = BYold + ty_1
 
-    img1 = translation(img,BXold,BYold)
-    img2 = translation(img,BXnew,BYnew)
+        img_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
 
-    # Display the plot in the Streamlit app
-    st.title("Original Image")
-    st.image(img1)
+        img = cv2.imdecode(img_bytes, 1)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    st.title("Translated Image")
-    st.image(img2)
+        img1 = translation(img, BXold, BYold)
+        img2 = translation(img, BXnew, BYnew)
+
+        # Display the plot in the Streamlit app
+        st.title("Original Image")
+        st.image(img1)
+
+        st.title("Translated Image")
+        st.image(img2)
+
 if __name__ == '__main__':
-  main()
+    main()
