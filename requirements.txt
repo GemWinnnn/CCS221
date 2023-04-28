@@ -1,7 +1,0 @@
-streamlit
-numpy
-scipy
-opencv-python-headless
-matplotlib
-tensorflow
-streamlit_webrtc
